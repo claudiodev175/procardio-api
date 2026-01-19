@@ -18,6 +18,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Usuario salvarUsuario(UsuarioDTO usuarioDTO) {
@@ -33,9 +34,13 @@ public class UsuarioService {
         Usuario usuario = buscarUsuarioPorId(id);
 
         if (Objects.nonNull(usuario)) {
-            usuario = usuario.toModel(usuarioDTO);
+            var usuarioAtualizado = usuario.toModel(usuarioDTO);
+            usuarioAtualizado.setId(usuario.getId()); // Garante o ID
+            
+            // Re-hash da senha caso tenha sido alterada
+            usuarioAtualizado.setSenha(passwordEncoder.encode(usuarioDTO.senha()));
 
-            return usuarioRepository.save(usuario);
+            return usuarioRepository.save(usuarioAtualizado);
         }
 
         throw new UsuarioNaoEncontradoException(id);

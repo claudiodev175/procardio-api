@@ -1,4 +1,5 @@
 package br.com.procardio.api.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,5 +33,6 @@ public class AutenticacaoController {
 
         return ResponseEntity.ok().body(new TokenDTO(tokenJwt));
     }
+
 
 }
