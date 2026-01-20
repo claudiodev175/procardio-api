@@ -13,11 +13,15 @@ import br.com.procardio.api.dto.LoginDTO;
 import br.com.procardio.api.dto.TokenDTO;
 import br.com.procardio.api.model.Usuario;
 import br.com.procardio.api.service.TokenService;
+import br.com.procardio.api.service.UsuarioService;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AutenticacaoController {
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private TokenService tokenService;
@@ -33,6 +37,5 @@ public class AutenticacaoController {
 
         return ResponseEntity.ok().body(new TokenDTO(tokenJwt));
     }
-
 
 }
